@@ -73,7 +73,7 @@
     };
 
     //Parse.initialize(option.applicationId, option.javascriptkey);
-    Parse.initialize("oc79MzwKTRo3Ypu6Y7Hul72Wm3ioF4mmhLGW0y5o", "pnSL2mk4yagNYoIzmy3w1b86q6VpMqiorK8aAdkr");
+    Parse.initialize("xxx", "xxx");
 		
     Parse.FacebookUtils.init();
     return Parse;
