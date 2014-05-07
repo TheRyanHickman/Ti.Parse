@@ -19,25 +19,33 @@
         }
     };
     
-    Ti.include("lib/parse-1.2.11.js");
-    /*
+    Ti.include("parse-1.2.11.js");
+    
+    
     Parse.localStorage = {
-        getItem: function(_key) {
-            return Ti.App.Properties.getObject(_key);
-        },
-        setItem: function(_key, _value) {
-            return Ti.App.Properties.setObject(_key, _value);
-        },
-        removeItem: function(_key) {
-            return Ti.App.Properties.removeProperty(_key);
-        }
-    };
-    */
+		getItem : function(key) {
+			return Ti.App.Properties.getObject(Parse.localStorage.fixKey(key));
+		},
+		setItem : function(key, value) {
+			return Ti.App.Properties.setObject(Parse.localStorage.fixKey(key), value);
+		},
+		removeItem : function(key, value) {
+			return Ti.App.Properties.removeProperty(Parse.localStorage.fixKey(key));
+		},
+		//Fix Parse Keys. Parse uses a Key containing slashes "/". This is invalid for Titanium Android
+		//We'll replace those slashes with underscores ""
+		fixKey : function(key) {
+			return key.split("/").join("");
+		}
+	};
+   
 	Parse._ajax = function(method, url, data, success, error) {
+       
         var options = {
             success: success,
             error: error
         };
+        
         if ("undefined" != typeof XDomainRequest) return Parse._ajaxIE8(method, url, data)._thenRunCallbacks(options);
         var promise = new Parse.Promise(), handled = !1, xhr = Ti.Network.createHTTPClient({
             timeout: 5e3
